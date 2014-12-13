@@ -22,6 +22,9 @@ app.collections.ToDos = Backbone.Collection.extend({
 		}
 	},
 	archive: function(archived, index){
+		this.models[index].set("archived", archived);
+	},
+	changeStatus: function(done, index){
 		this.models[index].set("done", done);
 	}
 });
