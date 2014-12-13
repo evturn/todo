@@ -11,6 +11,8 @@ var app = (function(){
 		todos			 : null,
 		init			 : function() {
 			this.content = $("content");
+			this.todos = new api.collections.Todos();
+			return this;
 		},
 		changeContent: function(el) {
 			this.content.empty().append(el);
