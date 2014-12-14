@@ -83,14 +83,14 @@ var app = (function(){
 	    view.render()
 		},
 		editToDo: function(index) {
-		    var view = ViewsFactory.form();
-		    api.title("Edit:").changeContent(view.$el);
-		    view.render(index);
+	    var view = ViewsFactory.form();
+	    api.title("Edit:").changeContent(view.$el);
+	    view.render(index);
 		},
-		archive: function() {},
-		newToDo: function() {},
-		editToDo: function(index) {},
-		deleteToDo: function(index) {}
+		deleteToDo: function(index) {
+	    api.todos.remove(api.todos.at(parseInt(index)));
+	    api.router.navigate("", {trigger: true});
+		}
 	});
 	api.router = new Router();
 

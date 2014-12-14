@@ -51,15 +51,4 @@ app.views.list = Backbone.View.extend({
 		setMode: function(mode) {
 			this.mode = mode;
 			return this;
-		},
-		list: function(archive) {
-	    var view = ViewsFactory.list();
-	    api
-	    .title(archive ? "Archive:" : "Your ToDos:")
-	    .changeContent(view.$el);
-	    view.setMode(archive ? "archive" : null).render();
-		},
-		archive: function() {
-		    this.list(true);
-		}
 });
