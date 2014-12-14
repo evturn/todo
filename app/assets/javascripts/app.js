@@ -57,6 +57,16 @@ var app = (function(){
 				 .changeContent(view.$el);
 			view.setMode(archive ? "archive" : null).render();
 		},
+		form: function() {
+    if(!this.formView) {
+        this.formView = new api.views.form({
+            model: api.todos
+        }).on("saved", function() {
+            api.router.navigate("", {trigger: true});
+        })
+    }
+    return this.formView;
+}
 		archive: function() {},
 		newToDo: function() {},
 		editToDo: function(index) {},
