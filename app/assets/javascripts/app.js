@@ -22,6 +22,16 @@ var app = (function(){
 		title: function(str) {
 			$("hi").text(str);
 			return this;
+		},
+		newToDo: function() {
+    var view = ViewsFactory.form();
+    api.title("Create new ToDo:").changeContent(view.$el);
+    view.render()
+		},
+		editToDo: function(index) {
+		    var view = ViewsFactory.form();
+		    api.title("Edit:").changeContent(view.$el);
+		    view.render(index);
 		}
 	};
 
@@ -30,17 +40,17 @@ var app = (function(){
 			if(!this.menuView) {
 					this.menuView = new api.views.menu({
 						el: $("#menu")
-					}),
-					return this.menuView;
-			},
-			list: function() {
-				if(!this.listView) {
-						this.listView = new api.views.list({
-						 		model: api.todos
-						});
-				}
-				return this.listView;
+				}),
+				return this.menuView;
 			}
+		},
+		list: function() {
+			if(!this.listView) {
+					this.listView = new api.views.list({
+					 		model: api.todos
+					});
+			}
+			return this.listView;
 		}
 	};
 	var Router = Backbone.Router.extend({
