@@ -1,3 +1,5 @@
+console.log('we got form');
+
 app.views.form = Backbone.View.extend({
   index: false,
   events: {

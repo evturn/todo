@@ -1,10 +1,11 @@
+console.log('we got menu');
+
 app.views.menu = Backbone.View.extend({
+	template: _.template($("tpl-menu").html()),
 	initialize: function(){
-		template: _.template($("tpl-menu").html()),
+		this.render();
 	},
 	render: function(){
-		this.$el.html(this.template({
-			
-		}));
+		this.$el.html(this.template({}));
 	}
 });

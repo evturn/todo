@@ -3,13 +3,13 @@ console.log('we got app');
 var app = (function(){
 
 	var api = {
-		views			 : {},
-		models		 : {},
+		views: {},
+		models: {},
 		collections: {},
-		content		 : null,
-		router		 : null,
-		todos			 : null,
-		init			 : function() {
+		content: null,
+		router: null,
+		todos: null,
+		init: function() {
 			this.content = $("content");
 			this.todos = new api.collections.Todos();
 			ViewsFactory.menu();
@@ -37,13 +37,13 @@ var app = (function(){
 
 	var ViewsFactory = {
 		menu: function() {
-			if(!this.menuView) {
-					this.menuView = new api.views.menu({
-						el: $("#menu")
-				}),
-				return this.menuView;
-			}
-		},
+      if(!this.menuView) {
+          this.menuView = new api.views.menu({ 
+              el: $("#menu")
+          });
+      }
+      return this.menuView;
+    },
 		list: function() {
 			if(!this.listView) {
 					this.listView = new api.views.list({
@@ -57,8 +57,8 @@ var app = (function(){
 		routes: {
 			"archive": "archive",
 			"new": "newToDo",
-			"edit/:index": "editToDo"
-			"delete/:index": "deleteToDo"
+			"edit/:index": "editToDo",
+			"delete/:index": "deleteToDo",
 			"": "list"
 		},
 		list: function(archive) {

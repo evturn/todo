@@ -6,7 +6,7 @@ app.collections.ToDos = Backbone.Collection.extend({
 		this.add({ title: "Code along" });
 		this.add({ title: "Try to make sense of this" });
 	},
-	model: app.models.ToDo
+	model: app.models.ToDo,
 	up: function(index){
 		if(index > o) {
 			var tmp = this.models[index-1];

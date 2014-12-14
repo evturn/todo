@@ -1,4 +1,4 @@
-class ToDoController < ApplicationController
+class TodosController < ApplicationController
 
  def index
 
