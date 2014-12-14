@@ -15,9 +15,9 @@
 //= require underscore
 //= require backbone
 //= require ./App
-//= require views/menu
-//= require collections/ToDos
 //= require models/ToDo
+//= require collections/ToDos
+//= require views/menu
 //= require views/form
 //= require views/list
 //= require turbolinks

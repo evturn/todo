@@ -5,5 +5,6 @@ app.models.ToDo = Backbone.Model.extend({
         title: "ToDo",
         archived: false,
         done: false
-    }
+    },
+    idAttribute: "id"
 });
