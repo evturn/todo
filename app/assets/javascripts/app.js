@@ -68,15 +68,25 @@ var app = (function(){
 			view.setMode(archive ? "archive" : null).render();
 		},
 		form: function() {
-    if(!this.formView) {
-        this.formView = new api.views.form({
-            model: api.todos
-        }).on("saved", function() {
-            api.router.navigate("", {trigger: true});
-        })
-    }
-    return this.formView;
-}
+	    if(!this.formView) {
+	        this.formView = new api.views.form({
+	            model: api.todos
+	        }).on("saved", function() {
+	            api.router.navigate("", {trigger: true});
+	        })
+	    }  
+	    return this.formView;
+		},
+		newToDo: function() {
+	    var view = ViewsFactory.form();
+	    api.title("Create new ToDo:").changeContent(view.$el);
+	    view.render()
+		},
+		editToDo: function(index) {
+		    var view = ViewsFactory.form();
+		    api.title("Edit:").changeContent(view.$el);
+		    view.render(index);
+		},
 		archive: function() {},
 		newToDo: function() {},
 		editToDo: function(index) {},
