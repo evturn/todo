@@ -12,6 +12,7 @@ var app = (function(){
 		init			 : function() {
 			this.content = $("content");
 			this.todos = new api.collections.Todos();
+			ViewsFactory.menu();
 			return this;
 		},
 		changeContent: function(el) {
