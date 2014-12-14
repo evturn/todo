@@ -1,6 +1,6 @@
 console.log('we got app');
 
-var app = (function(){
+var app = (function() {
 
 	var api = {
 		views: {},
@@ -10,9 +10,10 @@ var app = (function(){
 		router: null,
 		todos: null,
 		init: function() {
-			this.content = $("content");
-			this.todos = new api.collections.Todos();
+			this.content = $("#content");
 			ViewsFactory.menu();
+			this.todos = new api.collections.ToDos();
+			Backbone.history.start();
 			return this;
 		},
 		changeContent: function(el) {
@@ -20,39 +21,40 @@ var app = (function(){
 			return this;
 		},
 		title: function(str) {
-			$("hi").text(str);
+			$("h1").text(str);
 			return this;
-		},
-		newToDo: function() {
-    var view = ViewsFactory.form();
-    api.title("Create new ToDo:").changeContent(view.$el);
-    view.render()
-		},
-		editToDo: function(index) {
-		    var view = ViewsFactory.form();
-		    api.title("Edit:").changeContent(view.$el);
-		    view.render(index);
 		}
 	};
 
 	var ViewsFactory = {
 		menu: function() {
-      if(!this.menuView) {
-          this.menuView = new api.views.menu({ 
-              el: $("#menu")
-          });
-      }
-      return this.menuView;
-    },
+			if(!this.menuView) {
+				this.menuView = new api.views.menu({ 
+					el: $("#menu") 
+				});
+			}
+			return this.menuView;
+		},
 		list: function() {
 			if(!this.listView) {
-					this.listView = new api.views.list({
-					 		model: api.todos
-					});
-			}
+				this.listView = new api.views.list({
+					model: api.todos
+				});
+			}	
 			return this.listView;
+		},
+		form: function() {
+			if(!this.formView) {
+				this.formView = new api.views.form({
+					model: api.todos
+				}).on("saved", function() {
+					api.router.navigate("", {trigger: true});
+				})
+			}
+			return this.formView;
 		}
 	};
+
 	var Router = Backbone.Router.extend({
 		routes: {
 			"archive": "archive",
@@ -63,38 +65,31 @@ var app = (function(){
 		},
 		list: function(archive) {
 			var view = ViewsFactory.list();
-			api.title(archive ? "Archive" : "Your ToDos:")
-				 .changeContent(view.$el);
+			api
+			.title(archive ? "Archive:" : "Your ToDos:")
+			.changeContent(view.$el);
 			view.setMode(archive ? "archive" : null).render();
 		},
-		form: function() {
-	    if(!this.formView) {
-	        this.formView = new api.views.form({
-	            model: api.todos
-	        }).on("saved", function() {
-	            api.router.navigate("", {trigger: true});
-	        })
-	    }  
-	    return this.formView;
+		archive: function() {
+			this.list(true);
 		},
 		newToDo: function() {
-	    var view = ViewsFactory.form();
-	    api.title("Create new ToDo:").changeContent(view.$el);
-	    view.render()
+			var view = ViewsFactory.form();
+			api.title("Create new ToDo:").changeContent(view.$el);
+			view.render()
 		},
 		editToDo: function(index) {
-	    var view = ViewsFactory.form();
-	    api.title("Edit:").changeContent(view.$el);
-	    view.render(index);
+			var view = ViewsFactory.form();
+			api.title("Edit:").changeContent(view.$el);
+			view.render(index);
 		},
 		deleteToDo: function(index) {
-	    api.todos.remove(api.todos.at(parseInt(index)));
-	    api.router.navigate("", {trigger: true});
+			api.todos.remove(api.todos.at(parseInt(index)));
+			api.router.navigate("", {trigger: true});
 		}
 	});
 	api.router = new Router();
 
 	return api;
-
 
 })();

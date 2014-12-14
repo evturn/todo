@@ -1,41 +1,57 @@
 console.log('we got form');
 
-app.views.form = Backbone.View.extend({
-  index: false,
+app.views.list = Backbone.View.extend({
+  mode: null,
   events: {
-      'click button': 'save'
+    'click a[data-up]': 'priorityUp',
+    'click a[data-down]': 'priorityDown',
+    'click a[data-archive]': 'archive',
+    'click input[data-status]': 'changeStatus'
   },
   initialize: function() {
-      this.render();
+    var handler = _.bind(this.render, this);
+    this.model.bind('change', handler);
+    this.model.bind('add', handler);
+    this.model.bind('remove', handler);
   },
-  render: function(index) {
-      var template, html = $("#tpl-form").html();
-      if(typeof index == 'undefined') {
-          this.index = false;
-          template = _.template(html, { title: ""});
-      } else {
-          this.index = parseInt(index);
-          this.todoForEditing = this.model.at(this.index);
-          template = _.template($("#tpl-form").html(), {
-              title: this.todoForEditing.get("title")
+    render: function() {
+      var html = '<ul class="list">', 
+        self = this;
+      this.model.each(function(todo, index) {
+        if(self.mode === "archive" ? todo.get("archived") === true : todo.get("archived") === false) {
+          var template = _.template($("#tpl-list-item").html());
+          html += template({ 
+            title: todo.get("title"),
+            index: index,
+            archiveLink: self.mode === "archive" ? "unarchive" : "archive",
+            done: todo.get("done") ? "yes" : "no",
+            doneChecked: todo.get("done")  ? 'checked=="checked"' : ""
           });
-      }
-      this.$el.html(template);
-      this.$el.find("textarea").focus();
+        }
+      });
+      html += '</ul>';
+      this.$el.html(html);
       this.delegateEvents();
       return this;
-  },
-  save: function(e) {
-      e.preventDefault();
-      var title = this.$el.find("textarea").val();
-      if(title == "") {
-          alert("Empty textarea!"); return;
-      }
-      if(this.index !== false) {
-          this.todoForEditing.set("title", title);
-      } else {
-          this.model.add({ title: title });
-      }   
-      this.trigger("saved");      
+    },
+    priorityUp: function(e) {
+        var index = parseInt(e.target.parentNode.parentNode.getAttribute("data-index"));
+      this.model.up(index);
+    },
+    priorityDown: function(e) {
+        var index = parseInt(e.target.parentNode.parentNode.getAttribute("data-index"));
+      this.model.down(index);
+    },
+    archive: function(e) {
+        var index = parseInt(e.target.parentNode.parentNode.getAttribute("data-index"));
+      this.model.archive(this.mode !== "archive", index); 
+    },
+    changeStatus: function(e) {
+        var index = parseInt(e.target.parentNode.parentNode.getAttribute("data-index"));
+      this.model.changeStatus(e.target.checked, index);   
+    },
+  setMode: function(mode) {
+    this.mode = mode;
+    return this;
   }
 });
