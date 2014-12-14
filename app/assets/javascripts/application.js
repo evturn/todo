@@ -16,9 +16,9 @@
 //= require backbone
 //= require ./App
 //= require models/ToDo
-//= require collections/ToDos
+//= require views/list
 //= require views/menu
 //= require views/form
-//= require views/list
+//= require collections/ToDos
 //= require turbolinks
 //= require_tree .

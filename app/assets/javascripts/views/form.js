@@ -1,6 +1,6 @@
 console.log('we got form');
 
-app.views.list = Backbone.View.extend({
+app.views.form = Backbone.View.extend({
   mode: null,
   events: {
     'click a[data-up]': 'priorityUp',
@@ -16,14 +16,14 @@ app.views.list = Backbone.View.extend({
   },
     render: function() {
       var html = '<ul class="list">', 
-        self = this;
+          self = this;
       this.model.each(function(todo, index) {
         if(self.mode === "archive" ? todo.get("archived") === true : todo.get("archived") === false) {
-          var template = _.template($("#tpl-list-item").html());
+          var template = _.template($("#tpl-form").html());
           html += template({ 
             title: todo.get("title"),
             index: index,
-            archiveLink: self.mode === "archive" ? "unarchive" : "archive",
+            archivedLink: self.mode === "archive" ? "unarchive" : "archive",
             done: todo.get("done") ? "yes" : "no",
             doneChecked: todo.get("done")  ? 'checked=="checked"' : ""
           });

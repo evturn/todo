@@ -26,13 +26,13 @@ app.views.list = Backbone.View.extend({
 						archivedLink: self.mode === "archive" ? "unarchive" : "archive",
 						done: todo.get("done") ? "yes" : "no",
 						doneChecked: todo.get("done") ? 'checked="checked"' : ""
-					})
-					html =+ '</ul>';
-					this.$el.html(html);
-					this.delegateEvents();
-					return this;
+					});
 			}
-		})
+		});
+		html =+ '</ul>';
+		this.$el.html(html);
+		this.delegateEvents();
+		return this;
 	},
 	priorityUp: function(e) {
   var index = parseInt(e.target.parentNode.parentNode.getAttribute("data-index"));
