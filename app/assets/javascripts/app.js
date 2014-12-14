@@ -28,7 +28,7 @@ var app = (function() {
 
 	var ViewsFactory = {
 		menu: function() {
-			if(!this.menuView) {
+			if(!this.menuView){
 				this.menuView = new api.views.menu({ 
 					el: $("#menu") 
 				});

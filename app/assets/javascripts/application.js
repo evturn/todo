@@ -14,11 +14,11 @@
 //= require jquery_ujs
 //= require underscore
 //= require backbone
+//= require ./App
+//= require views/menu
 //= require collections/ToDos
 //= require models/ToDo
 //= require views/form
 //= require views/list
-//= require views/menu
-//= require ./app
 //= require turbolinks
 //= require_tree .
